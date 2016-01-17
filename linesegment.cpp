@@ -1,6 +1,6 @@
 #include "linesegment.h"
 
-mm LineSegment::Length()
+mm LineSegment::Length() const
 {
 	return A.Distance(B);
 }
