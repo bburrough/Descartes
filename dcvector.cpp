@@ -11,7 +11,7 @@ DCVector::DCVector(Point origin_arg, Point destination_arg)
 
 DCVector::DCVector(LineSegment line_arg)
 {
-	p = line_arg.B - line_arg.A;
+	p = line_arg.GetB() - line_arg.GetA();
 }
 
 mm DCVector::Magnitude() const

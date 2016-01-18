@@ -7,10 +7,15 @@
 class LineSegment
 {
 public:
-	Point A;
-	Point B;
-
+    LineSegment(const Point& A_arg, const Point& B_arg);
 	mm Length() const;
+
+    Point GetA() const;
+    Point GetB() const;
+
+private:
+    Point A;
+    Point B;
 };
 
 #endif //_LINE_SEGMENT_H_

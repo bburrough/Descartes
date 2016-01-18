@@ -6,7 +6,11 @@
 #include "units.h"
 
 
-
+/*
+    LRO is an enum that represents whether something is to
+    the left or right of something else, or whether they
+    are practically colinear.
+*/
 enum LRO
 {
     ON,
@@ -15,6 +19,9 @@ enum LRO
 };
 
 
+/*
+    A vector is a direction from 0,0,0.
+*/
 class DCVector
 {
 public:
@@ -26,9 +33,26 @@ public:
 	DCVector operator*=(const float& s);
 	DCVector operator/(const float& s) const;
 	DCVector operator/=(const float& s);
+
+    /*
+        Returns the magnitude (the length) of this vector
+        from 0,0,0.
+    */
     mm Magnitude() const;
+
+    /*
+        Calculate the dot product between this vector and v.
+    */
     mm Dot(DCVector v) const;
+
+    /*
+        Calculate the angle in degrees between this vector and v.
+    */
     degrees AngleBetween(DCVector v) const;
+
+    /*
+        Evaluate whether the point p lies along this vector.
+    */
     LRO LeftRightOrOn(Point p) const;
 
 private:	
