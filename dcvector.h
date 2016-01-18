@@ -1,30 +1,17 @@
 #ifndef _DESCARTES_VECTOR_H_
 #define _DESCARTES_VECTOR_H_
 
-#include "point.h"
 #include "linesegment.h"
 #include "units.h"
 
 
 /*
-    LRO is an enum that represents whether something is to
-    the left or right of something else, or whether they
-    are practically colinear.
-*/
-enum LRO
-{
-    ON,
-    LEFT,
-    RIGHT
-};
-
-
-/*
     A vector is a direction from 0,0,0.
 */
-class DCVector
+class DCVector : public Point
 {
 public:
+    DCVector(const float& x, const float& y, const float& z);
 	DCVector(Point p_arg);
 	DCVector(Point origin_arg, Point destination_arg);
 	DCVector(LineSegment line_arg);
@@ -54,9 +41,6 @@ public:
         Evaluate whether the point p lies along this vector.
     */
     LRO LeftRightOrOn(Point p) const;
-
-private:	
-	Point p;
 };
 
 #endif //_DESCARTES_VECTOR_H_

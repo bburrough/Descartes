@@ -16,6 +16,19 @@ using namespace std;
 
 
 /*
+    LRO is an enum that represents whether something is to
+    the left or right of something else, or whether they
+    are practically colinear.
+*/
+enum LRO
+{
+    ON,
+    LEFT,
+    RIGHT
+};
+
+
+/*
     Compare floats a and b.  Return true if they are nearer to each other than the
     tolerance.  Otherwise, return false.
 */
