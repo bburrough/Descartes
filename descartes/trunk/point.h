@@ -3,6 +3,8 @@
 
 #include "units.h"
 
+class DCVector;
+
 /*
     Represents a three dimensional point in space.  Units
     of measure are millimeters.
@@ -14,8 +16,10 @@ public:
     virtual ~Point();
 
     bool operator==(const Point& right) const;
-    Point operator-(const Point& right) const;
-    Point operator+(const Point& right) const;
+    Point operator-(const DCVector& right) const;
+    Point operator-=(const DCVector& right);
+    Point operator+(const DCVector& right) const;
+    Point operator+=(const DCVector& right);
 
     mm GetX() const;
     mm GetY() const;
