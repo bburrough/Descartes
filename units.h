@@ -81,14 +81,19 @@ static const unsigned long __nan[2] = { 0xffffffff, 0x7fffffff };
 #define isan(x) (!isnan(x))
 #endif
 
-typedef float mm; // millimeters (length)
-typedef float mm3; // millimeters cubed (volume)
-typedef float mmS; // millimeters per second
-typedef float mmS2; // millimeters per second squared
-typedef float mm3S; // millimeters cubed per second
-typedef float mmM; // millimeters per minute
-typedef float degrees;
-typedef float seconds;
+#define FUNDAMENTAL_NUMERIC_TYPE float
+
+typedef FUNDAMENTAL_NUMERIC_TYPE mm; // millimeters (length)
+typedef FUNDAMENTAL_NUMERIC_TYPE mm3; // millimeters cubed (volume)
+typedef FUNDAMENTAL_NUMERIC_TYPE mmS; // millimeters per second
+typedef FUNDAMENTAL_NUMERIC_TYPE mmS2; // millimeters per second squared
+typedef FUNDAMENTAL_NUMERIC_TYPE mm3S; // millimeters cubed per second
+typedef FUNDAMENTAL_NUMERIC_TYPE mmM; // millimeters per minute
+typedef FUNDAMENTAL_NUMERIC_TYPE degrees; // degrees of rotation
+typedef FUNDAMENTAL_NUMERIC_TYPE seconds;
+typedef FUNDAMENTAL_NUMERIC_TYPE degrees_celsius; // temperature in degrees C
 typedef unsigned int LineNumber;
+
+static const degrees_celsius room_temperature = 23.0f;
 
 #endif //_UNITS_H_
