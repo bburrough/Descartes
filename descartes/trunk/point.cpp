@@ -2,6 +2,10 @@
 
 #include "dcvector.h"
 
+#include <exception>
+
+using namespace std;
+
 Point::Point(mm x_arg, mm y_arg, mm z_arg)
     : _x(x_arg), _y(y_arg), _z(z_arg)
 {}
@@ -103,3 +107,21 @@ bool Point::IsRational() const
 {
     return isan(_x) && isan(_y) && isan(_z);
 }
+
+
+mm Point::operator[](unsigned int index) const
+{
+    switch (index)
+    {
+    case 0:
+        return _x;
+    case 1:
+        return _y;
+    case 2:
+        return _z;
+    default:
+        throw(exception("You tried to access an axis of this point that doesn't exist."));
+        return NAN;
+    }
+}
+

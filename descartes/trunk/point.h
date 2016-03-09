@@ -20,6 +20,7 @@ public:
     Point operator-=(const DCVector& right);
     Point operator+(const DCVector& right) const;
     Point operator+=(const DCVector& right);
+    mm operator[](unsigned int index) const;
 
     mm GetX() const;
     mm GetY() const;
@@ -43,11 +44,24 @@ public:
     */
     bool IsRational() const;
 
+
 private:
     mm _x;
     mm _y;
     mm _z;
 };
 
+
+/*
+class Point4 : public Point
+{
+    bool operator==(const Point& right) const;
+    Point operator-(const DCVector& right) const;
+    Point operator-=(const DCVector& right);
+    Point operator+(const DCVector& right) const;
+    Point operator+=(const DCVector& right);
+
+};
+*/
 
 #endif //_POINT_H_
