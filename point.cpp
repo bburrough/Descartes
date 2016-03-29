@@ -2,7 +2,7 @@
 
 #include "dcvector.h"
 
-#include <exception>
+#include <stdexcept>
 
 using namespace std;
 
@@ -120,7 +120,7 @@ mm Point::operator[](unsigned int index) const
     case 2:
         return _z;
     default:
-        throw(exception("You tried to access an axis of this point that doesn't exist."));
+        throw(runtime_error("You tried to access an axis of this point that doesn't exist."));
         return NAN;
     }
 }

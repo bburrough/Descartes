@@ -4,6 +4,7 @@
 /* 12345678911234567892123456789312345678941234567895123456789612345678971234567898 */
 #include <cfloat>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -46,6 +47,32 @@ static bool FloatsWithinTolerance(float a, float b, float tolerance)
 static bool FloatsEqual(float a, float b)
 {
     return fabs(a - b) < EPSILON;
+}
+
+
+static float safemax(float a, float b)
+{
+    if (isnan(a) && isnan(b))
+        return NAN;
+    else if (isnan(a) && !isnan(b))
+        return b;
+    else if (!isnan(a) && isnan(b))
+        return a;
+    else
+        return max(a, b);
+}
+
+
+static float safemin(float a, float b)
+{
+    if (isnan(a) && isnan(b))
+        return NAN;
+    else if (isnan(a) && !isnan(b))
+        return b;
+    else if (!isnan(a) && isnan(b))
+        return a;
+    else
+        return min(a, b);
 }
 
 
