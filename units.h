@@ -75,6 +75,14 @@ static float safemin(float a, float b)
         return min(a, b);
 }
 
+static float safemax(const float values[], const size_t& n)
+{
+    float max = NAN;
+    for (size_t i = 0; i < n; i++)
+        max = safemax(max, values[i]);
+    return max;
+}
+
 
 /*
     Windows (in its abject laziness) doesn't provide isnan().  Therefore, we
