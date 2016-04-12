@@ -12,7 +12,8 @@ class DCVector;
 class Point
 {
 public:
-    Point(mm x_arg = NAN, mm y_arg = NAN, mm z_arg = NAN);
+    Point();
+    Point(const mm& x_arg, const mm& y_arg, const mm& z_arg);
     virtual ~Point();
 
     bool operator==(const Point& right) const;
@@ -39,7 +40,7 @@ public:
     /*
         IsRational is used to check whether this Point
         is complete.  It will return true if x, y, and z
-        are actual points.  It will return false if they
+        are actual values.  It will return false if they
         are not numbers.
     */
     bool IsRational() const;

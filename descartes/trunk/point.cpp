@@ -6,7 +6,13 @@
 
 using namespace std;
 
-Point::Point(mm x_arg, mm y_arg, mm z_arg)
+
+Point::Point()
+    : _x(NAN), _y(NAN), _z(NAN)
+{}
+
+
+Point::Point(const mm& x_arg, const mm& y_arg, const mm& z_arg)
     : _x(x_arg), _y(y_arg), _z(z_arg)
 {}
 
@@ -18,17 +24,16 @@ Point::~Point()
 
 bool Point::operator==(const Point& right) const
 {
-    return FloatsEqual(_x, right._x) && FloatsEqual(_y, right._y) && FloatsEqual(_z, right._z);
+    return _x == right._x && _y == right._y && _z == right._z;
 }
 
 
 Point Point::operator-(const DCVector& right) const
 {
-    Point temp;
-    temp._x = this->_x - right._x;
-    temp._y = this->_y - right._y;
-    temp._z = this->_z - right._z;
-    return temp;
+    mm x = this->_x - right._x;
+    mm y = this->_y - right._y;
+    mm z = this->_z - right._z;
+    return Point(_x, _y, _z);
 }
 
 
@@ -41,11 +46,10 @@ Point Point::operator-=(const DCVector& right)
 
 Point Point::operator+(const DCVector& right) const
 {
-    Point temp;
-    temp._x = this->_x + right._x;
-    temp._y = this->_y + right._y;
-    temp._z = this->_z + right._z;
-    return temp;
+    mm x = this->_x + right._x;
+    mm y = this->_y + right._y;
+    mm z = this->_z + right._z;
+    return Point(_x, _y, _z);
 }
 
 
@@ -94,8 +98,8 @@ void Point::SetZ(mm z)
 
 mm Point::Distance(Point j) const
 {
-    if (isnan(_x) || isnan(_y) || isnan(_z) || isnan(j._x) || isnan(j._y) || isnan(j._z))
-        return NAN;
+    if (!IsRational())
+        return mm(NAN);
 
     Point temp = *this - j;
 
@@ -121,7 +125,6 @@ mm Point::operator[](unsigned int index) const
         return _z;
     default:
         throw(runtime_error("You tried to access an axis of this point that doesn't exist."));
-        return NAN;
     }
 }
 
