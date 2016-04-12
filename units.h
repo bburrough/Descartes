@@ -5,6 +5,7 @@
 #include <cfloat>
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -33,11 +34,7 @@ enum LRO
     Compare floats a and b.  Return true if they are nearer to each other than the
     tolerance.  Otherwise, return false.
 */
-static bool FloatsWithinTolerance(float a, float b, float tolerance)
-{
-    return (a / b) > 1.0f - tolerance && (a / b) < 1.0f + tolerance;
-}
-
+static bool FloatsWithinTolerance(float a, float b, float tolerance);
 
 /*
     Compare floats a and b.  Return true if they are within the machine's epsilon
@@ -107,28 +104,361 @@ static const unsigned long __nan[2] = { 0xffffffff, 0x7fffffff };
 #endif
 #endif
 
+#define FUNDAMENTAL_NUMERIC_TYPE float
 
 /*
     isan() simply returns the inverse of isnan.  It's provided to make
     isnan() comparison logic more clear.
 */
+/*
 #ifndef isan
 #define isan(x) (!isnan(x))
 #endif
+*/
+bool isan(const FUNDAMENTAL_NUMERIC_TYPE& x);
 
-#define FUNDAMENTAL_NUMERIC_TYPE float
 
-typedef FUNDAMENTAL_NUMERIC_TYPE mm; // millimeters (length)
-typedef FUNDAMENTAL_NUMERIC_TYPE mm3; // millimeters cubed (volume)
-typedef FUNDAMENTAL_NUMERIC_TYPE mmS; // millimeters per second
-typedef FUNDAMENTAL_NUMERIC_TYPE mmS2; // millimeters per second squared
-typedef FUNDAMENTAL_NUMERIC_TYPE mm3S; // millimeters cubed per second
-typedef FUNDAMENTAL_NUMERIC_TYPE mmM; // millimeters per minute
-typedef FUNDAMENTAL_NUMERIC_TYPE degrees; // degrees of rotation
-typedef FUNDAMENTAL_NUMERIC_TYPE seconds;
-typedef FUNDAMENTAL_NUMERIC_TYPE degrees_celsius; // temperature in degrees C
-typedef unsigned int LineNumber;
+class mm;
+class mm2;
+class mm3;
+class mmS2;
+class mmM;
+class radians;
+class degrees;
+class seconds;
+class minutes;
+class S2;
+class mm2S2;
+class mm2M2;
+class mmS;
+class mm3S;
+class degrees_celsius;
 
-static const degrees_celsius room_temperature = 23.0f;
+
+#define CANONICAL_DECLARATIONS(classname) classname(); \
+explicit classname(const FUNDAMENTAL_NUMERIC_TYPE& val); \
+\
+/* assignment to own type */ \
+/* classname operator=(const classname& right); */ \
+\
+/* arithmetic with own type */ \
+classname operator+(const classname& right) const; \
+classname operator-(const classname& right) const; \
+classname operator-() const; \
+classname operator+=(const classname& right); \
+classname operator-=(const classname& right); \
+\
+/* unit conversions */ \
+FUNDAMENTAL_NUMERIC_TYPE operator/(const classname& right) const; \
+\
+/* arithmetic with nondimensional values */ \
+classname operator*(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+classname operator/(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+classname operator*=(const FUNDAMENTAL_NUMERIC_TYPE& x); \
+classname operator/=(const FUNDAMENTAL_NUMERIC_TYPE& x); \
+friend classname operator*(const FUNDAMENTAL_NUMERIC_TYPE& x, const classname& right); \
+friend classname operator/(const FUNDAMENTAL_NUMERIC_TYPE& x, const classname& right); \
+\
+/* comparison with own type */ \
+bool operator==(const classname& right) const; \
+bool operator!=(const classname& right) const; \
+bool operator>(const classname& right) const; \
+bool operator<(const classname& right) const; \
+bool operator>=(const classname& right) const; \
+bool operator<=(const classname& right) const; \
+\
+/* comparison with nondimensional values */ \
+bool operator==(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+bool operator!=(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+bool operator>(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+bool operator<(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+bool operator>=(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+bool operator<=(const FUNDAMENTAL_NUMERIC_TYPE& x) const; \
+\
+friend bool isan(const classname& right); \
+friend bool isnan(const classname& right); \
+friend classname fabs(const classname& right); \
+friend classname safemax(const classname& x, const classname& y); \
+friend classname safemin(const classname& x, const classname& y); \
+\
+int GetIntValue() const; \
+float GetFloatValue() const; \
+\
+friend ostream& operator<<(ostream& os, const classname& right); \
+\
+
+
+// degrees of rotation - measure of angles
+class degrees
+{
+public:
+    friend class radians;
+    degrees(const radians& x);
+
+    CANONICAL_DECLARATIONS(degrees);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// radians - measure of angles
+class radians
+{
+public:
+    friend class degrees;
+    radians(const degrees& x);
+
+    CANONICAL_DECLARATIONS(radians);
+
+    friend mm cos(const radians& x);
+    friend mm sin(const radians& x);
+    friend mm tan(const radians& x);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millimeters - measure of length or distance
+class mm
+{
+public:
+    friend class mmS2;
+    friend class mm2;
+
+    CANONICAL_DECLARATIONS(mm);
+
+    // unit conversions
+    mm2 operator*(const mm& right) const;
+    seconds operator/(const mmS& right) const;
+    S2 operator/(const mmS2& right) const;
+    mm3 operator*(const mm2& right) const;
+    mmS operator/(const seconds& right) const;
+
+    // loose functions
+    friend radians acos(const mm& x);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// seconds squared - component of the value of acceleration (for acceleration use mmS2)
+class S2
+{
+public:
+    friend class mmS2;
+
+    CANONICAL_DECLARATIONS(S2);
+
+    // loose functions
+    friend seconds sqrt(const S2& val);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+class mmS2
+{
+public:
+    friend class mm;
+    friend class mmS;
+
+    CANONICAL_DECLARATIONS(mmS2);
+    
+    // arithmetic with mmS2
+    // const mmS2& operator-() const; // TODO: Do we want this in the canonical definitoins? i.e. Do we want to support negative velocities? Additionally, if we don't support negative velocities, subtraction must be clamped.
+   
+    // unit conversions
+    mm2S2 operator*(const mm& val) const;
+    mm operator*(const S2& right) const;
+    mmS operator*(const seconds& right) const;
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millimeters cubed per second - unit of volumetric velocity
+class mm3S
+{
+public:
+    friend class mm3;
+
+    CANONICAL_DECLARATIONS(mm3S);
+
+    //const mm3S& operator/(const unsigned int& right) const; // TODO: Why is this here?
+
+    // unit conversions
+    mmS operator/(const mm2& right) const;
+    mm2 operator/(const mmS& right) const;
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millilmeters per minute - unit of linear velocity
+class mmM
+{
+public:
+    friend class mmS;
+    mmM(const mmS& x); // convert from mmS
+
+    CANONICAL_DECLARATIONS(mmM);
+
+    // unit conversions
+    mm2M2 operator*(const mmM& right) const;
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millimeters per second - unit of linear velocity
+class mmS
+{
+public:
+    friend class mm;
+    friend class mmM;
+    friend class mm3S;
+
+    mmS(const mmM& x); // convert from mmM
+
+    CANONICAL_DECLARATIONS(mmS);
+    
+    // unit conversions
+    seconds operator/(const mmS2& right) const;
+    mm operator*(const seconds& right) const;
+    mm2S2 operator*(const mmS& right) const;
+    mm3S operator*(const mm2& right) const;
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// seconds - unit of time
+class seconds
+{
+public:
+    friend class mm;
+    friend class mm3;
+    friend class mmS;
+    friend class mmS2;
+    friend class minutes;
+    seconds(const minutes& x);
+
+    CANONICAL_DECLARATIONS(seconds);
+
+    // unit conversions
+    S2 operator*(const seconds& right) const;
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// minutes - unit of time
+class minutes
+{
+public:
+    friend class seconds;
+    minutes(const seconds& x); // convert seconds into minutes
+
+    CANONICAL_DECLARATIONS(minutes);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// temperature in degrees Celsius
+class degrees_celsius
+{
+public:
+    CANONICAL_DECLARATIONS(degrees_celsius);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+typedef uint32_t LineNumber;
+
+static const degrees_celsius room_temperature(23.0f);
+
+
+// millimeters squared - measure of area
+class mm2
+{
+public:
+    friend class mm;
+    friend class mmS;
+    friend class mm3;
+    friend class mm3S;
+
+    CANONICAL_DECLARATIONS(mm2);
+
+    // unit conversions
+    mm3 operator*(const mm& x) const;
+    mm operator/(const mm& x) const;
+
+    // loose functions
+    friend mm sqrt(const mm2& x);
+    friend mm2 operator*(const FUNDAMENTAL_NUMERIC_TYPE& left, const mm2& right);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millimeters cubed - measure of volume
+class mm3
+{
+public:
+    CANONICAL_DECLARATIONS(mm3);
+
+    // unit conversions
+    mm3S operator/(const seconds& x) const;
+    mm operator/(const mm2& x) const;
+    seconds operator/(const mm3S& x) const;
+
+    // loose functions
+    //friend const mm2& operator*(const FUNDAMENTAL_NUMERIC_TYPE& left, const mm3& right); // TODO: This declaration has the wrong return type.
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millimeters squared divided by seconds squared - this is primarily used as an intermediate factor which subsequently is converted to mmS via sqrt
+class mm2S2
+{
+public:
+    CANONICAL_DECLARATIONS(mm2S2);
+
+    // loose functions
+    friend mmS sqrt(const mm2S2& x);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
+
+
+// millimeters squared divided by minutes squared - this is primarily used as an intermediate factor which subsequently is converted to mmM via sqrt
+class mm2M2
+{
+public:
+    CANONICAL_DECLARATIONS(mm2M2);
+
+    // loose functions
+    friend mmM sqrt(const mm2M2& x);
+
+private:
+    FUNDAMENTAL_NUMERIC_TYPE _val;
+};
 
 #endif //_UNITS_H_

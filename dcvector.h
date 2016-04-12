@@ -11,7 +11,7 @@
 class DCVector : public Point
 {
 public:
-    DCVector(const float& x, const float& y, const float& z);
+    DCVector(const mm& x, const mm& y, const mm& z);
 	DCVector(Point p_arg);
 	DCVector(Point origin_arg, Point destination_arg);
 	DCVector(LineSegment line_arg);
@@ -30,7 +30,7 @@ public:
     /*
         Calculate the dot product between this vector and v.
     */
-    mm Dot(DCVector v) const;
+    mm2 Dot(const DCVector& v) const;
 
     /*
         Calculate the angle in degrees between this vector and v.
