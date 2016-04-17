@@ -60,6 +60,7 @@ mmS mmS2::operator*(const seconds& right) const { return mmS(_val * right._val);
 // functions which operate on mm3
 mm3S mm3::operator/(const seconds& right) const { return mm3S(_val / right._val); }
 mm mm3::operator/(const mm2& right) const { return mm(_val / right._val); }
+mm2 mm3::operator/(const mm& right) const { return mm2(_val / right._val); }
 
 
 // functions which operate on S2
@@ -69,6 +70,8 @@ seconds sqrt(const S2& x) { return seconds(sqrt(x._val)); }
 // functions which operate on mm3S
 mmS mm3S::operator/(const mm2& right) const { return mmS( _val / right._val ); }
 mm2 mm3S::operator/(const mmS& right) const { return mm2( _val / right._val ); }
+mm3 mm3S::operator*(const seconds& right) const { return mm3(_val / right._val); }
+
 
 // functions which operate on mm2M2
 mmM sqrt(const mm2M2& x) { return mmM(sqrt(x._val)); }
@@ -131,6 +134,7 @@ bool isnan(const classname& right) { return isnan(right._val) != 0; } \
 classname fabs(const classname& right) { return classname(fabs(right._val)); } \
 classname safemax(const classname& x, const classname& y) { return classname(safemax(x._val,y._val)); } \
 classname safemin(const classname& x, const classname& y) { return classname(safemin(x._val,y._val)); } \
+classname clamp(const classname& x, const classname& min, const classname& max) { return classname(clamp(x._val, min._val, max._val)); } \
 \
 int classname::GetIntValue() const { return (int)_val; } \
 float classname::GetFloatValue() const { return (float)_val; } \
