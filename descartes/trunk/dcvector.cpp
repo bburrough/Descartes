@@ -41,7 +41,7 @@ mm2 DCVector::Dot(const DCVector& v) const
 
 degrees DCVector::AngleBetween(DCVector v) const
 {
-    return radians(acos(this->Dot(v) / (this->Magnitude() * v.Magnitude())));
+    return degrees(acos(this->Dot(v) / (this->Magnitude() * v.Magnitude())));
 }
 
 

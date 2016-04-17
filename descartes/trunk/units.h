@@ -72,12 +72,23 @@ static float safemin(float a, float b)
         return min(a, b);
 }
 
+
 static float safemax(const float values[], const size_t& n)
 {
     float max = NAN;
     for (size_t i = 0; i < n; i++)
         max = safemax(max, values[i]);
     return max;
+}
+
+
+static float clamp(const float x, const float min, const float max)
+{
+    if (x > max)
+        return max;
+    if (x < min)
+        return min;
+    return x;
 }
 
 
@@ -180,6 +191,7 @@ friend bool isnan(const classname& right); \
 friend classname fabs(const classname& right); \
 friend classname safemax(const classname& x, const classname& y); \
 friend classname safemin(const classname& x, const classname& y); \
+friend classname clamp(const classname& x, const classname& min, const classname& max); \
 \
 int GetIntValue() const; \
 float GetFloatValue() const; \
@@ -226,6 +238,7 @@ class mm
 public:
     friend class mmS2;
     friend class mm2;
+    friend class mm3;
 
     CANONICAL_DECLARATIONS(mm);
 
@@ -294,6 +307,7 @@ public:
     // unit conversions
     mmS operator/(const mm2& right) const;
     mm2 operator/(const mmS& right) const;
+    mm3 operator*(const seconds& right) const;
 
 private:
     FUNDAMENTAL_NUMERIC_TYPE _val;
@@ -349,6 +363,8 @@ public:
     friend class mmS;
     friend class mmS2;
     friend class minutes;
+    friend class mm3S;
+
     seconds(const minutes& x);
 
     CANONICAL_DECLARATIONS(seconds);
@@ -425,6 +441,7 @@ public:
     mm3S operator/(const seconds& x) const;
     mm operator/(const mm2& x) const;
     seconds operator/(const mm3S& x) const;
+    mm2 operator/(const mm& right) const;
 
     // loose functions
     //friend const mm2& operator*(const FUNDAMENTAL_NUMERIC_TYPE& left, const mm3& right); // TODO: This declaration has the wrong return type.
