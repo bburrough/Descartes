@@ -61,6 +61,8 @@ mmM VelocityGivenAccelerationOverDistance(const mmM& initial_velocity, const mm&
 
 Descartes is designed to provide a type-rich interface for kinematic arithmetic.  It was inspired by a talk given by Bjarne Stroustrup at GoingNative 2012. This library achieves the vision of type rich programming and illustrates what is possible when the goals of object oriented programming are properly respected. It stands in direct contrast to the direction which C++ and most other modern programming languages have gone with type-deficient programming, and in the case of C++, "Almost Always Auto."
 
+Hit the image to go to the original talk by Bjarne Stroustrup. 👇
+
 [![Bjarne Stroustrup discusses type-rich programming](https://img.youtube.com/vi/OB-bdWKwXsU/0.jpg)](https://www.youtube.com/watch?v=OB-bdWKwXsU&t=1110s)
 
 
