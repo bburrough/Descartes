@@ -10,13 +10,28 @@ Descartes is available under either the MIT or public domain license. It is unen
 
 ## Classes
 
-* Point2 - a 2D point
-* Point - a 3D point
 * Circle - It's a circle. A 2D shape with a centerpoint and a radius.
-* DCVector2 - A 2D point which represents direction and magnitude from (0,0,0).
 * DCVector - A 3D point which represents direction and magnitude from (0,0,0).
+* DCVector2 - A 2D point which represents direction and magnitude from (0,0,0).
+* degrees - unit of angle, a full rotation is 360 degrees
+* degrees_celsius - unit of temperature
 * LineSegment - A 3D line segment between two points.
+* minutes - unit of time
+* mm - millimeters, unit of distance
+* mm2 - millimeters squared (mm²), unit of area
+* mm3 - millimeters cubed (mm³), unit of volume
+* mmS2 - millimeters per second squared (mm/S²), unit of acceleration
+* mmM - millimieters per minute (mm/M), unit of velocity
+* mm2S2 - millimeters squared per second squared (mm²/S²)
+* mm2M2 - millimeters squared per minute squared (mm²/M²)
+* mmS - millimeters per second (mm/S), unit of velocity
+* mm3S - millimeters cubed per second (mm³/S), unit of volumetric rate
+* Point - a 3D point
+* Point2 - a 2D point
+* radians - unit of angle, circumference of a circle is 2πr radians
+* seconds - unit of time
 * SpiralLine - A coil represented by a circle, a 2D vector, and a number of iterations.
+* S2 - seconds squared (S²)
 
 
 ## Static Functions 
