@@ -86,7 +86,7 @@ mm width(2.0f);
 mm2 area = height * width;
 ```
 
-This code does the same thing, but also validates the programmer's intent when multiplying values. The multiplication operator understands that multiplying a unit of distance by another unit of distsance results in a unit of distance squared, and not any other unit.  For example, let's add a unit of time and see how the program changes:
+This code does the same thing, but also validates the programmer's intent when multiplying values. The multiplication operator understands that multiplying a unit of distance by another unit of distance results in a unit of distance squared, and not any other unit.  For example, let's add a unit of time and see how the program changes:
 
 ```cpp
 mm height(0.5f);
