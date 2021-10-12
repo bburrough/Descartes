@@ -87,7 +87,7 @@ Consider the example:
 
 ```cpp
 float height(0.5f);
-float width(2f);
+float width(2.0f);
 
 float area = height * width;
 ```
