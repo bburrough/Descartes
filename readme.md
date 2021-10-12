@@ -97,7 +97,7 @@ mm2S coverage_rate = area / elapsed;
 
 In this case, we are calculating the amount of area covered in a given amount of time. Our division operator knows that dividing a unit of area by a unit of time results in the unit of area per unit time (mm²/S).  If we attempted to store the result in any other type, or if we accidentally used the wrong value in our expression, a compiler error would result.
 
-Now, let's do the same in the type-deficient original code:
+Now, let's do the same in the type-deficient code:
 
 ```cpp
 float height(0.5f);
