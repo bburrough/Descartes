@@ -22,10 +22,10 @@ Descartes is available under either the MIT or public domain license. It is unen
 * mm3 - millimeters cubed (mm³), unit of volume
 * mmS2 - millimeters per second squared (mm/S²), unit of acceleration
 * mmM - millimieters per minute (mm/M), unit of velocity
-* mm2S2 - millimeters squared per second squared (mm²/S²)
-* mm2M2 - millimeters squared per minute squared (mm²/M²)
+* mm2S2 - millimeters squared per second squared (mm²/S²) - unit of areal acceleration
+* mm2M2 - millimeters squared per minute squared (mm²/M²) - unit of areal acceleration
 * mmS - millimeters per second (mm/S), unit of velocity
-* mm3S - millimeters cubed per second (mm³/S), unit of volumetric rate
+* mm3S - millimeters cubed per second (mm³/S), unit of volumetric velocity
 * Point - a 3D point
 * Point2 - a 2D point
 * radians - unit of angle, circumference of a circle is 2πr radians
