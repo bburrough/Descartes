@@ -125,7 +125,7 @@ float area = height * width;
 float coverage_rate = area / elapsed;
 ```
 
-In this example, the compiler knows absolutely nothing about what the programmer intended with these types.  It can provide no validation of the arithmetic whatsoever.  This is exactly the kind of programming that leads to unit conversion errors and the [embarassing loss of billion dollar satellites](https://solarsystem.nasa.gov/missions/mars-climate-orbiter/in-depth/). Mistakes are so easy to overlook, they're almost inevitable.
+In this example, the compiler knows absolutely nothing about what the programmer intended with these types.  It can provide no validation of the arithmetic whatsoever.  This is exactly the kind of programming that leads to unit conversion errors and the [embarrassing loss of billion dollar satellites](https://solarsystem.nasa.gov/missions/mars-climate-orbiter/in-depth/). Mistakes are so easy to overlook, they're almost inevitable.
 
 If the programmer never declares their intention, the compiler will never be able to validate their goal. This is both a benefit of type-rich-programming, and a fundamental flaw with "Almost Always Auto" (and by extension a reason why AAA should not be used).
 
